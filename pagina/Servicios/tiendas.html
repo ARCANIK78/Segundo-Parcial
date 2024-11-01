@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espacio de Tiendas</title>
+    <link rel="stylesheet" href="{% static 'Servicios/css/styles.css' %}">
+    <link rel="icon" type="image/icon" href="{% static 'Servicios/img/ico/iconoes.jpeg' %}">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="{% url 'servicios' %}">Compra y Venta</a>
+            <a href="{% url 'tienda' %}">Espacio de Tiendas</a>
+        </nav>
+        <div class="user-info">
+            {% if user.is_authenticated %}
+                <p>Bienvenido, {{ user.username }}</p>
+            {% else %}
+                <a href="{% url 'login' %}">Iniciar sesión</a>
+            {% endif %}
+        </div>
+        <h1>Espacio de Tiendas</h1>
+        <p>Descubre tiendas y productos de nuestros vendedores.</p>
+    </header>
+
+    <section id="tiendas">
+        <h2>Tiendas Disponibles</h2>
+        <div class="store-list">
+            <div class="store">
+                <h3>Tienda 1</h3>
+                <p>Descripción breve de la tienda.</p>
+                <a href="tienda1.html">Visitar Tienda</a>
+            </div>
+            <div class="store">
+                <h3>Tienda 2</h3>
+                <p>Descripción breve de la tienda.</p>
+                <a href="tienda2.html">Visitar Tienda</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Espacio de Tiendas</p>
+    </footer>
+
+</body>
+</html>
