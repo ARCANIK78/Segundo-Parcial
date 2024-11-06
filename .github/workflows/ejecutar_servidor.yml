@@ -1,31 +1,35 @@
-name: Ejecutar servidor Django
+name: Django
 
 on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  runserver:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Comprobar código
         uses: actions/checkout@v2
 
-      - name: Set up Python
+      - name: Configurar Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'
 
-      - name: Install dependencies
+      - name: Instalar dependencias
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run server
-        env:
-          DJANGO_SETTINGS_MODULE: "my_servidor.settings"
+      - name: Ejecutar pruebas
         run: |
+          python manage.py makemigrations --empty my_servidor
+          python manage.py showmigrations
+          python manage.py makemigrations
           python manage.py migrate
           python manage.py runserver
