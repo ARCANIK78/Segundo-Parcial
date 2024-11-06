@@ -1,4 +1,5 @@
+git pull origin main
 git add .
-git commit -m "Actualización a gran escala con nuevos archivos"
+git commit -m "Resuelto conflicto con los cambios remotos"
 git push origin main
 
