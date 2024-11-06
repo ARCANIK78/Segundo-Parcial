@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compra</title>
+    <link rel="icon" type="image/icon" href="{% static 'Servicios/img/ico/icono.jpeg' %}">
+    <link rel="stylesheet" href="{% static 'Servicios/css/styles.css' %}">
+    <script src="{% static 'Servicios/js/script.js' %}" defer></script>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="{% url 'servicios' %}">Compra</a>
+            <a href="{% url 'venta' %}">Venta</a>
+        </nav>
+        <div class="user-info">
+            {% if user.is_authenticated %}
+                <p>Bienvenido, {{ user.username }}</p>
+                <form method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Cerrar sesión</button>
+                </form>                
+            {% else %}
+                <form method="POST" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <button type="submit">Iniciar sesión</button>
+                </form>
+            {% endif %}
+        </div>
+        <h1>Compra</h1>
+        <p>Explora productos disponibles para comprar.</p>
+    </header>
+
+    <section id="productos-compra">
+        <h2>Productos en Compra</h2>
+        <div class="product-list">
+            {% for producto in productos %}
+            <div class="product">
+                <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+                <h3>{{ producto.nombre }}</h3>
+                <p><strong>Descripción:</strong> {{ producto.descripcion }}</p>
+                <p><strong>Marca:</strong> {{ producto.marca }}</p>
+                <p><strong>Precio:</strong> ${{ producto.precio }}</p>
+                <p><strong>Fecha de subida:</strong> {{ producto.fecha_subida }}</p>
+                <p><strong>Categoría:</strong> {{ producto.categoria }}</p>
+                <p><strong>Estado:</strong> {{ producto.estado }}</p>
+                <form method="POST" action="{% url 'detalle' %}?id={{ producto.id }}">
+                    {% csrf_token %}
+                    <button type="submit">Comprar</button>
+                </form>
+            </div>
+            {% empty %}
+            <p>No hay productos disponibles.</p>
+            {% endfor %}
+        </div>
+    </section>    
+
+    <footer>
+        <p>&copy; 2024 Compra y Venta</p>
+    </footer>
+
+</body>
+</html>

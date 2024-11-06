@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ producto.nombre }} - Detalles del Producto</title>
+    <link rel="icon" href="{% static 'Servicios/ventaproducto/img/ico/icono.jpg' %}">
+    <link rel="stylesheet" href="{% static 'Servicios/ventaproducto/css/styles.css' %}">
+    <!-- "<script src="{% static 'Servicios/ventaproducto/js/script.js' %}" defer></script>" -->
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="{% url 'servicios' %}">Compra y Venta</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="{% url 'servicios' %}">Productos</a></li>
+                <li><a href="">Contacto</a></li>
+                {% if user.is_authenticated %}
+                    <li><p>Bienvenido, {{ user.username }}</p></li>
+                    <li><form method="POST" action="{% url 'logout' %}">{% csrf_token %}<button type="submit" style="background-color: rgb(0, 0, 0); color: white;"><img style="width: 25px;" src="{% static 'Servicios/ventaproducto/img/Cerrar sesión/Sesión.png' %}" alt=""></button></form></li>
+                {% else %}
+                    <li><form method="POST" action="{% url 'login' %}">{% csrf_token %}<button type="submit" style="background-color: rgb(0, 0, 0); color: white;"><img style="width: 25px;" src="{% static 'Servicios/ventaproducto/img/Cerrar sesión/Sesión.png' %}" alt=""></button></form></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <section id="producto-detalle">
+        <div class="product-detail-container">
+            <div class="product-images">
+                <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="product-main-image">
+                <div class="product-thumbnails">
+                    <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="thumbnail-image">
+                    <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="thumbnail-image">
+                    <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="thumbnail-image">
+                </div>
+            </div>
+
+            <div class="product-info">
+                <h1>{{ producto.nombre }}</h1>
+                <p class="product-price">Precio: ${{ producto.precio }}</p>
+                <p class="product-description">{{ producto.descripcion }}</p>
+
+                <div class="product-details">
+                    <p><strong>Descripción:</strong> {{ producto.descripcion }}</p>
+                    <p><strong>Categoría:</strong> {{ producto.categoria }}</p>
+                    <p><strong>Marca:</strong> {{ producto.marca }}</p>
+                    <p><strong>Estado:</strong> {{ producto.estado }}</p>
+                    <p><strong>Fecha de subida:</strong> {{ producto.fecha_subida }}</p>
+                    {% if producto.fecha_venta %}
+                        <p><strong>Fecha de venta:</strong> {{ producto.fecha_venta }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="product-actions">
+                    {% if producto.vendedor == user %}
+                        <button class="edit-product-button">
+                            <a href="{% url 'editar_producto' %}?id={{ producto.id }}">Editar producto</a>
+                        </button>
+                    {% else %}
+                        <button class="add-to-cart-button">Añadir al carrito</button>
+                        <button class="buy-now-button">Comprar ahora</button>
+                    {% endif %}
+                </div>                
+            </div>
+        </div>
+    </section>
+
+    <section id="reseñas">
+        <h2>Reseñas de Clientes</h2>
+        <div class="reviews-container">
+            <div class="review">
+                <p class="review-author">Juan Pérez</p>
+                <p class="review-rating">⭐⭐⭐⭐⭐</p>
+                <p class="review-text">¡Este producto es increíble! Cumple con todas mis expectativas.</p>
+            </div>
+            <div class="review">
+                <p class="review-author">María López</p>
+                <p class="review-rating">⭐⭐⭐⭐</p>
+                <p class="review-text">Muy buen producto, pero la entrega fue un poco lenta.</p>
+            </div>
+        </div>
+        <button class="leave-review-button">Deja tu reseña</button>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Compra y Venta. Todos los derechos reservados.</p>
+            <ul class="footer-links">
+                <li><a href="">Política de privacidad</a></li>
+                <li><a href="">Términos y condiciones</a></li>
+            </ul>
+        </div>
+    </footer>
+
+</body>
+</html>
