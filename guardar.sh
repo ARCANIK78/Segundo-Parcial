@@ -1,5 +1,5 @@
 git pull origin main
 git add .
-git commit -m "Resuelto conflicto con los cambios remotos"
+git commit -m "Resuelto"
 git push origin main
 
