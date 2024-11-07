@@ -67,6 +67,7 @@ def editar_producto(request):
         marca = request.POST.get('marca')
         precio = request.POST.get('precio')
         categoria = request.POST.get('categoria')
+        cantidad_disponible = request.POST.get('cantidad_disponible')
 
         if 'imagen' in request.FILES:
             imagen = request.FILES['imagen']
@@ -77,10 +78,12 @@ def editar_producto(request):
         producto.marca = marca
         producto.precio = precio
         producto.categoria = categoria
+        producto.cantidad_disponible = cantidad_disponible
         producto.save()
 
+        # Mostrar mensaje de éxito
         messages.success(request, 'Producto actualizado correctamente.')
-        return render(request, 'Servicios/ventaproducto/index.html', {'producto': producto})
+        return redirect('detalle', id=producto.id)
 
     return render(request, 'Servicios/ventaproducto/editar_producto.html', {'producto': producto})
 

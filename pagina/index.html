@@ -103,7 +103,7 @@
                     <div class="mensajes">
                         <ul>
                             {% for message in login_messages %}
-                                {% if message.message != 'Error al subir el producto.' and message.message != 'Producto subido exitosamente.'  %}
+                                {% if message.message != 'Error al subir el producto.' and message.message != 'Producto subido exitosamente.' and message.message != 'Producto actualizado correctamente.'  %}
                                     <li>{{ message }}</li>
                                 {% endif %}
                             {% endfor %}

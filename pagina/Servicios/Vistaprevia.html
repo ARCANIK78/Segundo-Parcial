@@ -43,6 +43,7 @@
                 <p><strong>Fecha de subida:</strong> {{ producto.fecha_subida }}</p>
                 <p><strong>Categoría:</strong> {{ producto.categoria }}</p>
                 <p><strong>Estado:</strong> {{ producto.estado }}</p>
+                <p><strong>Cantidad Disponible:</strong> {{ producto.cantidad_disponible }}</p>
                 {% if user.is_authenticated %}
                     <form method="POST" action="{% url 'logout' %}">
                         {% csrf_token %}

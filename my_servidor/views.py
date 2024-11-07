@@ -15,9 +15,18 @@ def venta_view(request):
         producto = Producto.objects.get(id=producto_id)
         
         if producto.estado == 'Disponible':
-            producto.estado = 'Vendido'
-            producto.fecha_venta = timezone.now()
+            if producto.cantidad_disponible > 0:
+                producto.estado = 'Vendido'
+                producto.fecha_venta = timezone.now()
+                producto.cantidad_disponible = 0 
+            else:
+                producto.cantidad_disponible -= 1
+                if producto.cantidad_disponible == 0:
+                    producto.estado = 'Vendido'
+                    producto.fecha_venta = timezone.now()
+            
             producto.save()
+            messages.success(request, 'Producto actualizado correctamente.')
         
     return render(request, 'Servicios/ventas.html', {'productos': productos})
 

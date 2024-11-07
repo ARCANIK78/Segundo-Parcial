@@ -21,9 +21,9 @@
                 <li><a href="">Contacto</a></li>
                 {% if user.is_authenticated %}
                     <li><p>Bienvenido, {{ user.username }}</p></li>
-                    <li><form method="POST" action="{% url 'logout' %}">{% csrf_token %}<button type="submit" style="background-color: rgb(0, 0, 0); color: white;"><img style="width: 25px;" src="{% static 'Servicios/ventaproducto/img/Cerrar sesión/Sesión.png' %}" alt=""></button></form></li>
+                    <li><form method="POST" action="{% url 'logout' %}">{% csrf_token %}<button type="submit" style="background-color: rgb(0, 0, 0); color: white;"><img style="width: 25px;" src="{% static 'Servicios/ventaproducto/img/Sesión/Cerrar Sesión.png' %}" alt=""></button></form></li>
                 {% else %}
-                    <li><form method="POST" action="{% url 'login' %}">{% csrf_token %}<button type="submit" style="background-color: rgb(0, 0, 0); color: white;"><img style="width: 25px;" src="{% static 'Servicios/ventaproducto/img/Cerrar sesión/Sesión.png' %}" alt=""></button></form></li>
+                    <li><form method="POST" action="{% url 'login' %}">{% csrf_token %}<button type="submit" style="background-color: rgb(0, 0, 0); color: white;"><img style="width: 25px;" src="{% static 'Servicios/ventaproducto/img/Sesión/Iniciar Sesión.png' %}" alt=""></button></form></li>
                 {% endif %}
             </ul>
         </nav>

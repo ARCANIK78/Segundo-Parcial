@@ -54,6 +54,9 @@
             <label for="marca">Marca:</label>
             <input type="text" id="marca" name="marca" required>
     
+            <label for="cantidad">Cantidad Disponible:</label>
+            <input type="number" id="cantidad" name="cantidad" required min="1">
+    
             <label for="imagen">Subir Imagen:</label>
             <input type="file" id="imagen" name="imagen" accept="image/*" required onchange="mostrarPrevia(event)">
     
@@ -63,7 +66,7 @@
     
             <button type="submit">Subir Producto</button>
         </form>
-    </section>    
+    </section>        
     
     <section id="productos-compra">
         <h2>Productos en Compra</h2>
@@ -78,6 +81,7 @@
                 <p><strong>Fecha de subida:</strong> {{ producto.fecha_subida }}</p>
                 <p><strong>Categoría:</strong> {{ producto.categoria }}</p>
                 <p><strong>Estado:</strong> {{ producto.estado }}</p>
+                <p><strong>Cantidad Disponible:</strong> {{ producto.cantidad_disponible }}</p>
                 {% if producto.fecha_venta %}
                     <p><strong>Fecha de venta:</strong> {{ producto.fecha_venta }}</p>
                 {% endif %}

@@ -21,6 +21,7 @@ class Producto(models.Model):
     vendedor = models.ForeignKey(User, on_delete=models.CASCADE)
     categoria = models.CharField(max_length=100)
     marca = models.CharField(max_length=100)
+    cantidad_disponible = models.PositiveIntegerField(default=1)
     fecha_subida = models.DateTimeField(auto_now_add=True)
     fecha_venta = models.DateTimeField(null=True, blank=True)
 
