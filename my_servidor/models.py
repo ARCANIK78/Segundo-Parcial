@@ -7,6 +7,7 @@ from django.utils import timezone
 def user_directory_path(instance, filename):
     return f'productos/{instance.vendedor.username}/{filename}'
 
+
 class Producto(models.Model):
 
     ESTADO_CHOICES = [

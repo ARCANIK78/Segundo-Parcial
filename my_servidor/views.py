@@ -41,8 +41,9 @@ def subir_producto_view(request):
             messages.success(request, 'Producto subido exitosamente.')
             return redirect('venta')
         else:
-            pass
+            print(form.errors)
             messages.error(request, 'Error al subir el producto.')
     else:
         form = ProductoForm()
-    return render(request, 'Servicios/subir_producto.html', {'form': form})
+    return render(request, 'Servicios/ventas.html', {'form': form})
+

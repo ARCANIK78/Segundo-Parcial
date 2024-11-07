@@ -123,31 +123,72 @@ window.onload = () => {
     formularioRegistro.style.display = 'none';
 };
 
-function url() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const mensaje = urlParams.get('mensaje');
-    const contenedor = document.getElementById('contenedor');
+document.getElementById('btn-login').addEventListener('click', function() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
+    fetch('/auth/', {  // Asegúrate que apunte a /auth/
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken'), // Para CSRF
+        },
+        body: JSON.stringify({ username, password }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Inicio de sesión exitoso:', data);
+    })
+    .catch(error => {
+        console.error('Error al iniciar sesión:', error);
+    });
+});
 
-    console.log(mensaje);
+document.getElementById('btn-register').addEventListener('click', function() {
+    const regUsername = document.getElementById('reg-username').value;
+    const regEmail = document.getElementById('reg-email').value;
+    const regPassword = document.getElementById('reg-password').value;
+    const regPasswordConfirm = document.getElementById('reg-password-confirm').value;
 
-    const allSections = document.querySelectorAll("section");
+    fetch('/auth/', {  // Asegúrate que apunte a /auth/
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken'), // Para CSRF
+        },
+        body: JSON.stringify({ regUsername, regEmail, regPassword, regPasswordConfirm }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Registro exitoso:', data);
+    })
+    .catch(error => {
+        console.error('Error al registrarse:', error);
+    });
+});
 
-    if (mensaje === 'registro') {
-        allSections.forEach(section => {
-            section.style.display = 'none';
-        });
-        contenedor.style.display = 'block';
-        formularioLogin.style.display = 'none';
-        formularioRegistro.style.display = 'block';
-    } else if (mensaje === 'login') {
-        allSections.forEach(section => {
-            section.style.display = 'none';
-        });
-        contenedor.style.display = 'block';
-        formularioRegistro.style.display = 'none';
-        formularioLogin.style.display = 'block';
+// Función para obtener el token CSRF
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
     }
+    return cookieValue;
 }
-
-window.onload = url;
